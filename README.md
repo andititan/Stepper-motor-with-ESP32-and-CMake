@@ -1,1 +1,1 @@
-# Stepper-motor-with-ESP32-and-CMake
+# Stepper-motor-on-ESP32-with-C-and-CMake
