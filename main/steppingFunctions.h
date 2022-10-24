@@ -1,6 +1,6 @@
 #include "setup.h"
 
-void fullDriveStepping(int pin1, int pin2, int pin3, int pin4, int msDelay){
+void fullDriveStepping(const int pin1, const int pin2, const int pin3, const int pin4, const int msDelay){
     int arr[4] = {pin1, pin2, pin3, pin4};
     
     for(int i = 0; i < 4; i++){
@@ -18,7 +18,7 @@ void fullDriveStepping(int pin1, int pin2, int pin3, int pin4, int msDelay){
     }
 }
 
-void waveDriveStepping(int pin1, int pin2, int pin3, int pin4, int msDelay){
+void waveDriveStepping(const int pin1, const int pin2, const int pin3, const int pin4, const int msDelay){
     int arr[4] = {pin1, pin2, pin3, pin4};
 
     for(int i = 0; i < 4; i++){
@@ -28,7 +28,7 @@ void waveDriveStepping(int pin1, int pin2, int pin3, int pin4, int msDelay){
     }
 }
 
-void halfDriveStepping(int pin1, int pin2, int pin3, int pin4, int msDelay){
+void halfDriveStepping(const int pin1, const int pin2, const int pin3, const int pin4, const int msDelay){
     int arr[4] = {pin1, pin2, pin3, pin4};
     int a = 0;
 
