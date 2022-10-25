@@ -1,49 +1,70 @@
 #include "setup.h"
 
-void fullDriveStepping(const int pin1, const int pin2, const int pin3, const int pin4, const int msDelay){
-    int arr[4] = {pin1, pin2, pin3, pin4};
-    
-    for(int i = 0; i < 4; i++){
-        
-        gpio_set_level(arr[i], 1);
+void fullDriveStepping(const int pins[4], const int msDelay, const char option){
+    if(option == 'c'){
+        for(int i = 0; i < 4; i++){
+            gpio_set_level(pins[i], 1);
 
-        if(i == 3){
-            gpio_set_level(arr[0], 1);
-        }else{
-            gpio_set_level(arr[i + 1], 1);
+            if(i == 3){
+                gpio_set_level(pins[0], 1);
+            }else{
+                gpio_set_level(pins[i + 1], 1);
+            }
+
+            vTaskDelay(msDelay);
+            pinsToLow(pins);
         }
+    }else{
+        for(int i = 3; i >= 0; i--){
+        
+            gpio_set_level(pins[i], 1);
 
-        vTaskDelay(msDelay);
-        pinsToLow(pin1, pin2, pin3, pin4);
+            if(i == 3){
+                gpio_set_level(pins[0], 1);
+            }else{
+                gpio_set_level(pins[i + 1], 1);
+            }
+
+            vTaskDelay(msDelay);
+            pinsToLow(pins);
+        }
     }
 }
 
-void waveDriveStepping(const int pin1, const int pin2, const int pin3, const int pin4, const int msDelay){
-    int arr[4] = {pin1, pin2, pin3, pin4};
-
-    for(int i = 0; i < 4; i++){
-        gpio_set_level(arr[i], 1);
-        vTaskDelay(msDelay);
-        pinsToLow(pin1, pin2, pin3, pin4);
-    }
-}
-
-void halfDriveStepping(const int pin1, const int pin2, const int pin3, const int pin4, const int msDelay){
-    int arr[4] = {pin1, pin2, pin3, pin4};
+void halfDriveStepping(const int pins[4], const int msDelay, const char option){
     int a = 0;
 
-    for(int i = 0; i < 8; i++){
-        gpio_set_level(arr[a], 1);
-        if(i % 2 != 0){
-            if(i == 7){
-                gpio_set_level(arr[0], 1);
-            }else{
-                a++;
-                gpio_set_level(arr[a], 1);
+    if(option == 'c'){
+        a = 0;
+        for(int i = 0; i < 8; i++){
+            gpio_set_level(pins[a], 1);
+            if(i % 2 != 0){
+                if(i == 7){
+                    gpio_set_level(pins[0], 1);
+                }else{
+                    a++;
+                    gpio_set_level(pins[a], 1);
+                }
             }
-        }
 
-        vTaskDelay(msDelay);
-        pinsToLow(pin1, pin2, pin3, pin4);
+            vTaskDelay(msDelay);
+            pinsToLow(pins);
+        }
+    }else{
+        a = 3;
+        for(int i = 7; i >= 0; i--){
+            gpio_set_level(pins[a], 1);
+            if(i % 2 != 0){
+                if(i == 7){
+                    gpio_set_level(pins[0], 1);
+                }else{
+                    a--;
+                    gpio_set_level(pins[a], 1);
+                }
+            }
+
+            vTaskDelay(msDelay);
+            pinsToLow(pins);
+        }
     }
 }
